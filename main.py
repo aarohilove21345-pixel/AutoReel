@@ -1,6 +1,6 @@
 """
 main.py
-AutoReel - Android app built with Kivy
+AutoReel - Android app built with Kivy (English UI, matches approved design)
 """
 import os
 import threading
@@ -27,140 +27,236 @@ try:
 except Exception:
     filechooser = None
 
-Window.clearcolor = (0.08, 0.08, 0.08, 1)
+Window.clearcolor = (0.06, 0.06, 0.06, 1)
 
 VIDEO_EXTENSIONS = (".mp4", ".mov", ".avi", ".mkv", ".webm")
 
 KV = """
+#:import dp kivy.metrics.dp
+
 ScreenManager:
     MainScreen:
     SettingsScreen:
     HistoryScreen:
+
+<SectionLabel@Label>:
+    color: 0.55,0.55,0.55,1
+    font_size: "12sp"
+    size_hint_y: None
+    height: dp(22)
+    halign: "left"
+    text_size: self.size
+
+<ToggleRow@BoxLayout>:
+    prop_name: ""
+    label_text: ""
+    size_hint_y: None
+    height: dp(50)
+    padding: dp(14), 0
+    canvas.before:
+        Color:
+            rgba: 0.12,0.12,0.12,1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [12,]
+    Label:
+        text: root.label_text
+        color: 0.95,0.95,0.95,1
+        font_size: "14sp"
+        halign: "left"
+        valign: "middle"
+        text_size: self.size
+    Button:
+        size_hint: None, None
+        size: dp(28), dp(28)
+        pos_hint: {"center_y": 0.5}
+        background_normal: ""
+        background_down: ""
+        background_color: (0.24,0.80,0.56,1) if getattr(app, root.prop_name) else (0.22,0.22,0.22,1)
+        color: 0.03,0.22,0.16,1
+        font_size: "16sp"
+        bold: True
+        text: "OK" if getattr(app, root.prop_name) else ""
+        on_release: setattr(app, root.prop_name, not getattr(app, root.prop_name))
 
 <MainScreen>:
     name: "main"
     BoxLayout:
         orientation: "vertical"
         padding: dp(20)
-        spacing: dp(8)
-
-        Label:
-            text: "AutoReel"
-            font_size: "24sp"
-            bold: True
-            color: 1,1,1,1
-            size_hint_y: None
-            height: dp(34)
-
-        Label:
-            text: "Video Auto-Publisher"
-            font_size: "13sp"
-            color: 0.6,0.6,0.6,1
-            size_hint_y: None
-            height: dp(20)
-
-        Label:
-            text: "Selected: " + (app.selected_folder or "No folder selected")
-            color: 0.9,0.9,0.9,1
-            font_size: "12sp"
-            size_hint_y: None
-            height: dp(40)
-            text_size: self.width, None
-
-        Button:
-            text: "Browse Folder"
-            size_hint_y: None
-            height: dp(40)
-            background_color: 0.2,0.2,0.2,1
-            on_release: app.browse_folder()
-
-        Label:
-            text: "Platforms"
-            color: 0.6,0.6,0.6,1
-            font_size: "12sp"
-            size_hint_y: None
-            height: dp(20)
+        spacing: dp(14)
 
         BoxLayout:
             size_hint_y: None
-            height: dp(44)
-            Label:
-                text: "Upload to YouTube"
-                color: 1,1,1,1
-            Switch:
-                active: True
-                size_hint_x: None
-                width: dp(60)
-                on_active: app.youtube_enabled = self.active
+            height: dp(52)
+            spacing: dp(12)
+
+            BoxLayout:
+                size_hint: None, None
+                size: dp(52), dp(52)
+                canvas.before:
+                    Color:
+                        rgba: 0.10,0.36,0.63,1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [14,]
+                Label:
+                    text: "AR"
+                    bold: True
+                    color: 1,1,1,1
+                    font_size: "16sp"
+
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                    text: "AutoReel"
+                    font_size: "20sp"
+                    bold: True
+                    color: 1,1,1,1
+                    halign: "left"
+                    valign: "bottom"
+                    text_size: self.size
+                Label:
+                    text: "Video Auto-Publisher"
+                    font_size: "12sp"
+                    color: 0.55,0.55,0.55,1
+                    halign: "left"
+                    valign: "top"
+                    text_size: self.size
 
         BoxLayout:
+            orientation: "vertical"
             size_hint_y: None
-            height: dp(44)
-            Label:
-                text: "Post to Facebook Page"
-                color: 1,1,1,1
-            Switch:
-                active: True
-                size_hint_x: None
-                width: dp(60)
-                on_active: app.facebook_enabled = self.active
+            height: dp(150)
+            padding: dp(14)
+            spacing: dp(8)
+            canvas.before:
+                Color:
+                    rgba: 0.10,0.10,0.10,1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [14,]
+                Color:
+                    rgba: 0.32,0.32,0.32,1
+                Line:
+                    rounded_rectangle: (self.x, self.y, self.width, self.height, 14)
+                    dash_length: 6
+                    dash_offset: 4
+                    width: 1.2
 
-        Label:
-            text: "AI Options"
-            color: 0.6,0.6,0.6,1
-            font_size: "12sp"
-            size_hint_y: None
-            height: dp(20)
+            Widget:
+                size_hint_y: None
+                height: dp(6)
 
-        BoxLayout:
-            size_hint_y: None
-            height: dp(44)
-            Label:
-                text: "Auto-write Caption"
-                color: 1,1,1,1
-            Switch:
-                active: True
-                size_hint_x: None
-                width: dp(60)
-                on_active: app.caption_enabled = self.active
+            BoxLayout:
+                size_hint: None, None
+                size: dp(40), dp(32)
+                pos_hint: {"center_x": 0.5}
+                canvas.before:
+                    Color:
+                        rgba: 0.85,0.68,0.15,1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [4,]
 
-        BoxLayout:
-            size_hint_y: None
-            height: dp(44)
             Label:
-                text: "Viral Hashtags"
+                text: "Select Folder"
+                color: 0.85,0.85,0.85,1
+                font_size: "13sp"
+                size_hint_y: None
+                height: dp(24)
+
+            Label:
+                text: app.selected_folder or "No folder selected"
+                color: 0.5,0.5,0.5,1
+                font_size: "10sp"
+                size_hint_y: None
+                height: dp(16)
+
+            Button:
+                text: "Browse"
+                size_hint: None, None
+                size: dp(120), dp(34)
+                pos_hint: {"center_x": 0.5}
+                background_normal: ""
+                background_down: ""
+                background_color: 0.2,0.2,0.2,1
                 color: 1,1,1,1
-            Switch:
-                active: True
-                size_hint_x: None
-                width: dp(60)
-                on_active: app.hashtags_enabled = self.active
+                font_size: "12sp"
+                on_release: app.browse_folder()
+
+        SectionLabel:
+            text: "PLATFORMS"
+
+        ToggleRow:
+            prop_name: "youtube_enabled"
+            label_text: "Upload to YouTube"
+
+        ToggleRow:
+            prop_name: "facebook_enabled"
+            label_text: "Post to Facebook Page"
+
+        SectionLabel:
+            text: "AI OPTIONS"
+
+        ToggleRow:
+            prop_name: "caption_enabled"
+            label_text: "Auto-write Caption"
+
+        ToggleRow:
+            prop_name: "hashtags_enabled"
+            label_text: "Viral Hashtags"
 
         Button:
             text: "Upload Now"
             size_hint_y: None
-            height: dp(48)
+            height: dp(50)
+            background_normal: ""
+            background_down: ""
             background_color: 1,1,1,1
             color: 0,0,0,1
+            font_size: "15sp"
             bold: True
             on_release: app.start_upload()
 
+        Widget:
+            size_hint_y: None
+            height: dp(1)
+            canvas:
+                Color:
+                    rgba: 0.2,0.2,0.2,1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
         BoxLayout:
             size_hint_y: None
-            height: dp(36)
+            height: dp(30)
             Button:
                 text: "History"
-                background_color: 0.1,0.1,0.1,1
+                background_normal: ""
+                background_down: ""
+                background_color: 0.06,0.06,0.06,1
+                color: 0.55,0.55,0.55,1
+                font_size: "12sp"
                 on_release: app.goto_history()
             Button:
-                text: "Settings"
-                background_color: 0.1,0.1,0.1,1
+                text: "Settings (API keys)"
+                background_normal: ""
+                background_down: ""
+                background_color: 0.06,0.06,0.06,1
+                color: 0.55,0.55,0.55,1
+                font_size: "12sp"
                 on_release: app.goto_settings()
 
         ScrollView:
             Label:
                 text: app.log_text
-                color: 0.8,0.8,0.8,1
+                color: 0.7,0.7,0.7,1
                 font_size: "11sp"
                 size_hint_y: None
                 height: self.texture_size[1]
@@ -182,7 +278,8 @@ class SettingsScreen(Screen):
         root = BoxLayout(orientation="vertical", padding=20, spacing=8)
 
         back = Button(text="< Back", size_hint_y=None, height=40,
-                       background_color=(0.1, 0.1, 0.1, 1))
+                       background_normal="", background_down="",
+                       background_color=(0.1, 0.1, 0.1, 1), color=(1, 1, 1, 1))
         back.bind(on_release=lambda *a: setattr(self.manager, "current", "main"))
         root.add_widget(back)
 
@@ -217,7 +314,8 @@ class SettingsScreen(Screen):
         root.add_widget(scroll)
 
         save_btn = Button(text="Save", size_hint_y=None, height=48,
-                           background_color=(0.24, 0.81, 0.56, 1))
+                           background_normal="", background_down="",
+                           background_color=(0.24, 0.81, 0.56, 1), color=(0.03, 0.22, 0.16, 1))
         save_btn.bind(on_release=self.save)
         root.add_widget(save_btn)
 
@@ -241,7 +339,8 @@ class HistoryScreen(Screen):
         root = BoxLayout(orientation="vertical", padding=20, spacing=8)
 
         back = Button(text="< Back", size_hint_y=None, height=40,
-                       background_color=(0.1, 0.1, 0.1, 1))
+                       background_normal="", background_down="",
+                       background_color=(0.1, 0.1, 0.1, 1), color=(1, 1, 1, 1))
         back.bind(on_release=lambda *a: setattr(self.manager, "current", "main"))
         root.add_widget(back)
 
@@ -285,7 +384,7 @@ class AutoReelApp(App):
         self.root.current = "settings"
 
     def goto_history(self):
-        for screen in self.root.screens:
+        for screen in list(self.root.screens):
             if screen.name == "history":
                 self.root.remove_widget(screen)
         self.root.add_widget(HistoryScreen())
