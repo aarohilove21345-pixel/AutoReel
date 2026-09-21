@@ -1,5 +1,6 @@
 [app]
 title = AutoReel
+icon.filename = %(source.dir)s/AutoReel_no_text.png
 package.name = autoreel
 package.domain = org.autoreel
 
