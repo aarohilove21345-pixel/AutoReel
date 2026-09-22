@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AutoReel"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="স্ট্যাটাস: IDLE"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ফোল্ডার পাথ"
+            android:textSize="12sp" />
+        <EditText
+            android:id="@+id/etFolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ফোল্ডার পাথ (খালি রাখলে ডিফল্ট ব্যবহার হবে)"
+            android:layout_marginBottom="12dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AI প্রোভাইডার (openai / gemini / claude)"
+            android:textSize="12sp" />
+        <EditText
+            android:id="@+id/etAiProvider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="gemini"
+            android:layout_marginBottom="8dp" />
+        <EditText
+            android:id="@+id/etAiKey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="AI API key"
+            android:layout_marginBottom="12dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Facebook পেজ"
+            android:textSize="12sp" />
+        <EditText
+            android:id="@+id/etFbPageId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Page ID"
+            android:layout_marginBottom="8dp" />
+        <EditText
+            android:id="@+id/etFbToken"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Page access token"
+            android:layout_marginBottom="12dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="YouTube OAuth access token"
+            android:textSize="12sp" />
+        <EditText
+            android:id="@+id/etYtToken"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="YouTube access token"
+            android:layout_marginBottom="16dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:text="সেভ" />
+            <Button
+                android:id="@+id/btnStart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                android:text="স্টার্ট" />
+            <Button
+                android:id="@+id/btnStop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:text="স্টপ" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="লাইভ লগ"
+            android:textSize="12sp"
+            android:layout_marginBottom="6dp" />
+        <TextView
+            android:id="@+id/tvLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="200dp"
+            android:background="#F1EFE8"
+            android:padding="10dp"
+            android:textSize="11sp"
+            android:fontFamily="monospace" />
+    </LinearLayout>
+</ScrollView>
